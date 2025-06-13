@@ -1,9 +1,9 @@
 import React, {useState, useEffect } from 'react';
-import {getAll, post, put, deleteById } from '../src/ProjectAssets/memdb';
+import {getAll, post, put, deleteById, TEST_VARIABLE} from './restdb';
 import CustomerList from '../src/components/CustomerList'
 import CustomerAddUpdateForm from '../src/components/CustomerAddUpdateForm';
 import "./App.css";
-
+console.log("Test import:", TEST_VARIABLE)
 function log(message){console.log(message);}
 
 export function App(params) {
@@ -17,7 +17,7 @@ export function App(params) {
 
   const getCustomers =  function(){
     log("in getCustomers()");
-    setCustomers(getAll);
+    getAll(setCustomers);
   }
 
   const handleListClick = function(item){
@@ -44,24 +44,33 @@ export function App(params) {
     setFormObject(blankCustomer);
   }
 
-  let onDeleteClick = function () {
-    log("in onDeleteClick()");
-    if(formObject.id >= 0) {
-      deleteById(formObject.id);
-    }
-    setFormObject(blankCustomer);
+let onDeleteClick = function () {
+  log("in onDeleteClick()");
+  console.log("formObject in onDeleteClick:", formObject);
+  console.log("Type of setCustomers:", typeof setCustomers);
+  
+  if (formObject.id >= 0) {
+    console.log("Calling deleteById with:", formObject.id);
+    deleteById(formObject.id, setCustomers);
+  } else {
+    console.log("Not deleting: Invalid ID", formObject.id);
   }
+  
+  setFormObject(blankCustomer);
+}
 
-  let onSaveClick = function () {
-    log("in onSaveClick()");
-    if (mode === 'Add') {
-      post(formObject);
-    }
-    if (mode === 'Update') {
-      put(formObject.id, formObject);
-    }
-    setFormObject(blankCustomer);
+
+let onSaveClick = function () {
+  log("in onSaveClick()");
+  
+  if (mode === 'Add') {
+    post(formObject, setCustomers);
   }
+  if (mode === 'Update') {
+    put(formObject.id, formObject, setCustomers);
+  }
+  setFormObject(blankCustomer);
+}
 
   return (
     <div>

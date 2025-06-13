@@ -7,7 +7,7 @@
       "password": "maryj"
     },
     {
-      "id": 1,      
+      "id": 1,
       "name": "Karen Addams",
       "email": "karena@abc.com",
       "password": "karena"
@@ -17,7 +17,12 @@
       "name": "Scott Ramsey",
       "email": "scottr@abc.com",
       "password": "scottr"
+    },
+    {
+      "name": "fox",
+      "email": "fox@abc.com",
+      "password": "1234",
+      "id": 4
     }
   ]
-
 }
